@@ -30,6 +30,11 @@ func main() {
 	// API Versioning
 	v1 := r.Group("/v1")
 
+
+	// All Products
+	
+
+
 	// 		BOOK
 	bookRepository := book.NewRepository(db)
 	bookService := book.NewService(bookRepository)
@@ -42,7 +47,15 @@ func main() {
 	v1.DELETE("/products/book/:id", bookHandler.DeleteBook)
 	
 	//		Laptop
+	laptopRepository := laptop.NewRepository(db)
+	laptopService := laptop.NewService(laptopRepository)
+	laptopHandler := handler.NewLaptopHandler(laptopService)
 
+	v1.POST("/products/laptop", laptopHandler.PostBooksHandler)
+	v1.GET("/products/laptop", laptopHandler.GetBooksList)
+	v1.GET("/products/laptop/:id", laptopHandler.GetBookById)
+	v1.PUT("/products/laptop/:id", laptopHandler.UpdateBook)
+	v1.DELETE("/products/laptop/:id", laptopHandler.DeleteBook)
 
 	//		Hoodie
 	hoodieRepository := hoodie.NewRepository(db)
