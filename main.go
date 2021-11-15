@@ -17,6 +17,7 @@ func main() {
 	r := gin.Default()
 
 	// connect to database
+	// PLEASE CREATE go-ecommerce database first.
 	dsn := "root:@tcp(127.0.0.1:3306)/go-ecommerce?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
@@ -25,14 +26,24 @@ func main() {
 	}
 
 	// auto migrate (auto add table)
-	db.AutoMigrate(&allproducts.AllProducts{}, &book.Book{}, &hoodie.Hoodie{}, &laptop.Laptop{})
+	db.AutoMigrate(&allproducts.AllProduct{}, &book.Book{}, &hoodie.Hoodie{}, &laptop.Laptop{})
 
 	// API Versioning
 	v1 := r.Group("/v1")
 
 
 	// All Products
-	
+	allProductRepository := allproducts.NewRepository(db)
+	allProductService := allproducts.NewService(allProductRepository)
+	allProductHandler := handler.NewAllProductHandler(allProductService)
+
+	v1.POST("/products", allProductHandler.PostBooksHandler)
+	v1.GET("/products", allProductHandler.GetBooksList)
+	v1.GET("/products/:id", allProductHandler.GetBookById)
+	v1.GET("/products/category/:category", allProductHandler.GetBookByCategory)
+	v1.GET("/products/user/:email_user", allProductHandler.GetBookByUser)
+	v1.PUT("/products/:id", allProductHandler.UpdateBook)
+	v1.DELETE("/products/:id", allProductHandler.DeleteBook)
 
 
 	// 		BOOK
