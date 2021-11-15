@@ -8,4 +8,5 @@ type AllProductRequest struct {
 	Price        int    `json:"price"`
 	Name_user    string `json:"name_user"`
 	Email_user   string `json:"email_user"`
+	Category     string `json:"category"`
 }

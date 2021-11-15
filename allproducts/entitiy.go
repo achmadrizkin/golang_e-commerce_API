@@ -8,4 +8,5 @@ type AllProducts struct {
 	Price        string
 	Name_user    string
 	Email_user   string
+	Category	 string
 }
