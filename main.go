@@ -40,6 +40,20 @@ func main() {
 	v1.GET("/products/book/:id", bookHandler.GetBookById)
 	v1.PUT("/products/book/:id", bookHandler.UpdateBook)
 	v1.DELETE("/products/book/:id", bookHandler.DeleteBook)
+	
+	//		Laptop
+
+
+	//		Hoodie
+	hoodieRepository := hoodie.NewRepository(db)
+	hoodieService := hoodie.NewService(hoodieRepository)
+	hoodieHandler := handler.NewHoodieHandler(hoodieService)
+
+	v1.POST("/products/hoodie", hoodieHandler.PostBooksHandler)
+	v1.GET("/products/hoodie", hoodieHandler.GetBooksList)
+	v1.GET("/products/hoodie/:id", hoodieHandler.GetBookById)
+	v1.PUT("/products/hoodie/:id", hoodieHandler.UpdateBook)
+	v1.DELETE("/products/hoodie/:id", hoodieHandler.DeleteBook)
 
 	// 
 	r.Run(":3000")

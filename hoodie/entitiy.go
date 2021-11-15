@@ -5,7 +5,7 @@ type Hoodie struct {
 	Name_product string
 	Image_url    string
 	Description  string
-	Price        string
+	Price        int
 	Name_user    string
 	Email_user   string
 }
