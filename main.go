@@ -6,6 +6,7 @@ import (
 	"go_e-commerce-api/handler"
 	"go_e-commerce-api/hoodie"
 	"go_e-commerce-api/laptop"
+	"go_e-commerce-api/transaction"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -26,7 +27,7 @@ func main() {
 	}
 
 	// auto migrate (auto add table)
-	db.AutoMigrate(&allproducts.AllProduct{}, &book.Book{}, &hoodie.Hoodie{}, &laptop.Laptop{})
+	db.AutoMigrate(&allproducts.AllProduct{}, &book.Book{}, &hoodie.Hoodie{}, &laptop.Laptop{}, &transaction.Transaction{})
 
 	// API Versioning
 	v1 := r.Group("/v1")
@@ -44,6 +45,17 @@ func main() {
 	v1.GET("/products/user/:email_user", allProductHandler.GetBookByUser)
 	v1.PUT("/products/:id", allProductHandler.UpdateBook)
 	v1.DELETE("/products/:id", allProductHandler.DeleteBook)
+
+	// Transaction
+	transactionRepository := transaction.NewRepository(db)
+	transactionService := transaction.NewService(transactionRepository)
+	transactionHandler := handler.NewTransactionHandler(transactionService)
+
+	v1.POST("/transaction", transactionHandler.PostBooksHandler)
+	v1.GET("/transaction", transactionHandler.GetBooksList)
+	v1.GET("/transaction/:id", transactionHandler.GetBookById)
+	v1.PUT("/transaction/:id", transactionHandler.UpdateBook)
+	v1.DELETE("/transaction/:id", transactionHandler.DeleteBook)
 
 
 	// 		BOOK
