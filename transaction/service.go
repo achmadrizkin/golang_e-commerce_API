@@ -4,6 +4,7 @@ type Service interface {
 	FindAll() ([]Transaction, error)
 	FindByID(ID int) (Transaction, error)
 	Create(TransactionRequest TransactionRequest) (Transaction, error)
+	FindByUser(email_buyer string) ([]Transaction, error)
 	Update(ID int, TransactionRequest TransactionRequest) (Transaction, error)
 	Delete(ID int) (Transaction, error)
 }
@@ -26,6 +27,12 @@ func (s *service) FindAll() ([]Transaction, error) {
 func (s *service) FindByID(ID int) (Transaction, error) {
 	Transactions, err := s.repository.FindByID(ID)
 	return Transactions, err
+	// return s.repository.FindAll()
+}
+
+func (s *service) FindByUser(name_buyer string) ([]Transaction, error) {
+	books, err := s.repository.FindByUser(name_buyer)
+	return books, err
 	// return s.repository.FindAll()
 }
 

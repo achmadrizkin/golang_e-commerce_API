@@ -60,6 +60,31 @@ func (h *transactionHandler) GetBookById(c *gin.Context) {
 	})
 }
 
+func (h *transactionHandler) GetBookByUser(c *gin.Context) {
+	email_user := c.Param("email_buyer")
+
+	allproductss, err := h.transactionService.FindByUser(email_user)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
+	}
+
+	var allproductssResponse []transaction.TransactionResponse
+
+	for _, b := range allproductss {
+		allproductsResponse := converToTransactionResponse(b)
+		allproductssResponse = append(allproductssResponse, allproductsResponse)
+	}
+
+	//BEWARE DONT TOUCH THIS CODE
+	if allproductssResponse != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"data": allproductssResponse,
+		})
+	}
+}
+
 func (h *transactionHandler) PostBooksHandler(c *gin.Context) {
 	var transactionRequest transaction.TransactionRequest
 
