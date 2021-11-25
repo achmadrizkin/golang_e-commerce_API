@@ -99,9 +99,12 @@ func (h *allProductHandler) GetBookByUser(c *gin.Context) {
 		allproductssResponse = append(allproductssResponse, allproductsResponse)
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"data": allproductssResponse,
-	})
+	//BEWARE DONT TOUCH THIS CODE
+	if allproductssResponse != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"data": allproductssResponse,
+		})
+	}
 }
 
 
