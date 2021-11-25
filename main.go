@@ -46,6 +46,9 @@ func main() {
 	v1.PUT("/products/:id", allProductHandler.UpdateBook)
 	v1.DELETE("/products/:id", allProductHandler.DeleteBook)
 
+	// get by name product
+	v1.GET("/products/np/:name_product", allProductHandler.GetBookByProductName)
+
 	// Transaction
 	transactionRepository := transaction.NewRepository(db)
 	transactionService := transaction.NewService(transactionRepository)
@@ -56,6 +59,7 @@ func main() {
 	v1.GET("/transaction/:id", transactionHandler.GetBookById)
 	v1.PUT("/transaction/:id", transactionHandler.UpdateBook)
 	v1.DELETE("/transaction/:id", transactionHandler.DeleteBook)
+
 
 	// 
 	v1.GET("/transaction/user/:email_buyer", transactionHandler.GetBookByUser)

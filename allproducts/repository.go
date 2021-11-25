@@ -1,6 +1,8 @@
 package allproducts
 
 import (
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -9,6 +11,7 @@ type Repository interface {
 	FindByID(ID int) (AllProduct, error)
 	FindByCategory(category string) ([]AllProduct, error)
 	FindByUser(email_user string) ([]AllProduct, error)
+	FindByNameProduct(name_product string) ([]AllProduct, error)
 	Create(allProduct AllProduct) (AllProduct, error)
 	Update(allProduct AllProduct) (AllProduct, error)
 	Delete(allProduct AllProduct) (AllProduct, error)
@@ -50,6 +53,18 @@ func (r *repository) FindByUser(email_user string) ([]AllProduct, error) {
 	// err := r.db.Where("title = ?", title).First(&books).Error
 
 	err := r.db.Where("email_user LIKE ?", email_user).Find(&allProducts).Error
+
+	return allProducts, err
+}
+
+func (r *repository) FindByNameProduct(name_product string) ([]AllProduct, error) {
+	var allProducts []AllProduct
+	// err := r.db.Where("title = ?", title).First(&books).Error
+
+    value := fmt.Sprintf("%%%s%%", name_product)
+	err := r.db.Where("name_product LIKE ?", value).Find(&allProducts).Error
+
+	// err := r.db.Where("email_user LIKE ?", name_product).Find(&allProducts).Error
 
 	return allProducts, err
 }
