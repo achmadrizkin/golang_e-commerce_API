@@ -84,8 +84,10 @@ func (h *allProductHandler) GetBookByCategory(c *gin.Context) {
 
 func (h *allProductHandler) GetBookByProductName(c *gin.Context) {
 	name_product := c.Param("name_product")
+	email_user := c.Param("email_user")
+	price := c.Param("price")
 
-	allproductss, err := h.allproductsService.FindByNameProduct(name_product)
+	allproductss, err := h.allproductsService.FindByNameProduct(name_product, price, email_user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err,

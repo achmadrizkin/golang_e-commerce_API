@@ -47,7 +47,7 @@ func main() {
 	v1.DELETE("/products/:id", allProductHandler.DeleteBook)
 
 	// get by name product
-	v1.GET("/products/np/:name_product", allProductHandler.GetBookByProductName)
+	v1.GET("/products/np/:name_product/:email_user/:price", allProductHandler.GetBookByProductName)
 
 	// Transaction
 	transactionRepository := transaction.NewRepository(db)
