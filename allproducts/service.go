@@ -8,7 +8,9 @@ type Service interface {
 	FindByNameProduct(name_product string, price string, email_user string) (AllProduct, error)
 	Create(allProductRequest AllProductRequest) (AllProduct, error)
 	Update(ID int, allProductRequest AllProductRequest) (AllProduct, error)
+	UpdateByNameProduct(name_product string, price string, email_user string, allProductRequest AllProductRequest) (AllProduct, error)
 	Delete(ID int) (AllProduct, error)
+	DeleteByNameProduct(name_product string, price string, email_user string) (AllProduct, error)
 }
 
 type service struct {
@@ -89,8 +91,37 @@ func (s *service) Update(ID int, allProductRequest AllProductRequest) (AllProduc
 	// return s.repository.FindAll()
 }
 
+func (s *service) UpdateByNameProduct(name_product string, price string, email_user string, allProductRequest AllProductRequest) (AllProduct, error) {
+	book, _ := s.repository.FindByNameProduct(name_product, price, email_user)
+
+	pricex, _ := allProductRequest.Price.Int64()
+
+	//
+	book.Name_product = allProductRequest.Name_product
+	book.Image_url = allProductRequest.Image_url
+	book.Description = allProductRequest.Description
+	book.Price = int(pricex)
+	book.Name_user = allProductRequest.Name_user
+	book.Email_user = allProductRequest.Email_user
+	book.Category = allProductRequest.Category
+
+	newAllProduct, err := s.repository.Update(book)
+
+	return newAllProduct, err
+	// return s.repository.FindAll()
+}
+
 func (s *service) Delete(ID int) (AllProduct, error) {
 	book, _ := s.repository.FindByID(ID)
+
+	newAllProduct, err := s.repository.Delete(book)
+
+	return newAllProduct, err
+	// return s.repository.FindAll()
+}
+
+func (s *service) DeleteByNameProduct(name_product string, price string, email_user string) (AllProduct, error) {
+	book, _ := s.repository.FindByNameProduct(name_product, price, email_user)
 
 	newAllProduct, err := s.repository.Delete(book)
 

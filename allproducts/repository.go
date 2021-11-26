@@ -14,7 +14,9 @@ type Repository interface {
 	FindByNameProduct(name_product string, price string, email_user string) (AllProduct, error)
 	Create(allProduct AllProduct) (AllProduct, error)
 	Update(allProduct AllProduct) (AllProduct, error)
+	UpdateByNameProduct(allProduct AllProduct) (AllProduct, error)
 	Delete(allProduct AllProduct) (AllProduct, error)
+	DeleteByNameProduct(allProduct AllProduct) (AllProduct, error)
 }
 
 type repository struct {
@@ -81,7 +83,19 @@ func (r *repository) Update(allProduct AllProduct) (AllProduct, error) {
 	return allProduct, err
 }
 
+func (r *repository) UpdateByNameProduct(allProduct AllProduct) (AllProduct, error) {
+	err := r.db.Save(&allProduct).Error
+
+	return allProduct, err
+}
+
 func (r *repository) Delete(allProduct AllProduct) (AllProduct, error) {
+	err := r.db.Delete(&allProduct).Error
+
+	return allProduct, err
+}
+
+func (r *repository) DeleteByNameProduct(allProduct AllProduct) (AllProduct, error) {
 	err := r.db.Delete(&allProduct).Error
 
 	return allProduct, err

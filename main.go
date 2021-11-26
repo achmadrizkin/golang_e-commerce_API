@@ -48,6 +48,8 @@ func main() {
 
 	// get by name product
 	v1.GET("/products/np/:name_product/:email_user/:price", allProductHandler.GetBookByProductName)
+	v1.DELETE("/products/np/:name_product/:email_user/:price", allProductHandler.DeleteByNameProduct)
+	v1.PUT("/products/np/:name_product/:email_user/:price", allProductHandler.UpdateByNameProduct)
 
 	// Transaction
 	transactionRepository := transaction.NewRepository(db)
