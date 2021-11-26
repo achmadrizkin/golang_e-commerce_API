@@ -87,26 +87,19 @@ func (h *allProductHandler) GetBookByProductName(c *gin.Context) {
 	email_user := c.Param("email_user")
 	price := c.Param("price")
 
-	allproductss, err := h.allproductsService.FindByNameProduct(name_product, price, email_user)
+	b, err := h.allproductsService.FindByNameProduct(name_product, price, email_user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err,
 		})
 	}
 
-	var allproductssResponse []allproducts.AllProductResponse
-
-	for _, b := range allproductss {
-		allproductsResponse := converToAllProductResponse(b)
-		allproductssResponse = append(allproductssResponse, allproductsResponse)
-	}
-
+	allproductsResponse := converToAllProductResponse(b)
 	//BEWARE DONT TOUCH THIS CODE
-	if allproductssResponse != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"data": allproductssResponse,
-		})
-	}
+	c.JSON(http.StatusOK, gin.H{
+		"data": allproductsResponse,
+	})
+
 }
 
 func (h *allProductHandler) GetBookByUser(c *gin.Context) {
@@ -133,7 +126,6 @@ func (h *allProductHandler) GetBookByUser(c *gin.Context) {
 		})
 	}
 }
-
 
 func (h *allProductHandler) PostBooksHandler(c *gin.Context) {
 	var allproductsRequest allproducts.AllProductRequest
