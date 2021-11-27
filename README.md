@@ -8,6 +8,9 @@ And after that, download this repo, and copy this text, and run in terminal. and
 
     go run main.go
 
+## Implementation in android 
+https://github.com/achmadrizkin/kotlin_e-commerce_MVVM
+
 ## API 
 
 please change the localhost:3000 to 10.0.2.2:3000 if u want to use emulator
